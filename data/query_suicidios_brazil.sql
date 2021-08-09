@@ -33,4 +33,15 @@ select
 	count(*)qtde 
 from suicidio where country = 'Brazil' group by year order by year;
 
+select 
+	age, 
+	sex,
+	sum(suicides_no) cases,
+	concat( TRUNC((sum(suicides_no) * 100)::numeric /
+	(select sum(suicidio.suicides_no)::numeric from suicidio suicidio where suicidio.country = 'Brazil'), 2), ' %' ) perc
+from suicidio
+	where country = 'Brazil'
+		group by age, sex
+			order by age, sex;
+
 
